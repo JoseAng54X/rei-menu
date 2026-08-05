@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarBots - Guía de Comandos</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #000F08;
+            color: #E2E8F0;
+            scroll-behavior: smooth;
+        }
+
+        .pill-btn {
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .night-panel {
+            background-color: #081410;
+            border: 1px solid #1A2E26;
+        }
+
+        .whatsapp-code {
+            background-color: #FB3640;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.375rem;
+            color: #000F08;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.825rem;
+            font-weight: 700;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000F08;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FB3640;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 sm:p-8 selection:bg-[#FB3640] selection:text-[#000F08]">
+
+    <!-- Header de la sección de comandos -->
+    <header class="max-w-4xl mx-auto w-full flex justify-between items-center mb-6 pb-4 border-b border-[#1A2E26]">
+        <div class="flex items-center space-x-3">
+            <svg class="w-7 h-7 text-[#FB3640]" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 8 8 12 2 12C8 12 12 16 12 22C12 16 16 12 22 12C16 12 12 8 12 2Z"/>
+            </svg>
+            <div>
+                <h1 class="text-xl font-bold text-[#FB3640]">StarBots Comandos</h1>
+                <p class="text-xs text-[#94A3B8]">Catálogo oficial de funciones</p>
+            </div>
+        </div>
+        <a href="../index.html" class="pill-btn px-4 py-2 bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-semibold text-xs hover:border-[#FB3640] transition-colors">
+            ← Volver
+        </a>
+    </header>
+
+    <!-- ÁREA PRINCIPAL DE COMANDOS MODULAR -->
+    <main class="max-w-4xl mx-auto w-full space-y-6 flex-grow">
+        
+        <!-- Índice interactivo -->
+        <div class="p-4 rounded-3xl night-panel">
+            <p class="text-xs font-bold text-[#FB3640] tracking-wider mb-2">Índice rápido de categorías:</p>
+            <div class="flex flex-wrap gap-1.5 text-xs">
+                <button onclick="scrollToCategory('cat-descargas')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Descargas</button>
+                <button onclick="scrollToCategory('cat-utilidades')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Utilidades</button>
+                <button onclick="scrollToCategory('cat-admins')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Admins</button>
+                <button onclick="scrollToCategory('cat-grupos')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Grupos</button>
+                <button onclick="scrollToCategory('cat-bienvenidas')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Bienvenidas</button>
+                <button onclick="scrollToCategory('cat-perfiles')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Perfiles</button>
+                <button onclick="scrollToCategory('cat-reacciones')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Reacciones</button>
+                <button onclick="scrollToCategory('cat-economia')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Economía</button>
+                <button onclick="scrollToCategory('cat-subbots')" class="px-3 py-1 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-medium hover:bg-[#FB3640] hover:text-[#000F08] transition-all">Sub-Bots</button>
+            </div>
+        </div>
+
+        <!-- Contenedor Completo de Comandos -->
+        <div class="night-panel p-6 sm:p-8 rounded-3xl space-y-6 text-sm">
+            
+            <!-- Descargas -->
+            <div id="cat-descargas" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Descargas</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-tiktok</span> <span class="whatsapp-code">-tt</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— descarga videos de tiktok</p></div>
+                    <div><p><span class="whatsapp-code">-youtubeaudio</span> <span class="whatsapp-code">-ytaudio</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— descarga audios de youtube</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -ytaudio fly me to the moon</p></div>
+                    <div><p><span class="whatsapp-code">-ytmp4</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— descarga videos de youtube</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -ytmp4 smooth criminal</p></div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Utilidades -->
+            <div id="cat-utilidades" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Utilidades</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-sticker</span> <span class="whatsapp-code">-s</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz stickers animados o estáticos</p><p class="text-xs text-[#FB3640]/80 italic">&gt; Error con videos</p></div>
+                    <div><p><span class="whatsapp-code">-ping</span> <span class="whatsapp-code">-p</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa el tiempo de respuesta del bot</p></div>
+                    <div><p><span class="whatsapp-code">-seeimage</span> <span class="whatsapp-code">-toimg</span> <span class="whatsapp-code">-seeimg</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Convierte Stickers a imagen</p></div>
+                    <div><p><span class="whatsapp-code">-help</span> <span class="whatsapp-code">-menu</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Abre esta guía de todos los comandos</p></div>
+                    <div><p><span class="whatsapp-code">-report</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Reporta bugs encontrados en los comandos para solucionarlos</p></div>
+                    <div><p><span class="whatsapp-code">-delete</span> <span class="whatsapp-code">-del</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Elimina mensajes del bot o de otros usuarios</p><p class="text-xs text-[#FB3640]/80 italic">&gt; Solo admins pueden borrar de otros usuarios</p></div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Admins -->
+            <div id="cat-admins" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Admins</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-onlyadmin</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz que el bot solo lo puedan usar los admins</p></div>
+                    <div><p><span class="whatsapp-code">-promote</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Hacer Admin a un usuario</p></div>
+                    <div><p><span class="whatsapp-code">-demote</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Quitar Admin a un usuario</p></div>
+                    <div><p><span class="whatsapp-code">-pin</span> <span class="whatsapp-code">-fijar</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Fija un mensaje por 24 horas</p></div>
+                    <div><p><span class="whatsapp-code">-unpin</span> <span class="whatsapp-code">-desfijar</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Quita un mensaje fijado</p></div>
+                    <div><p><span class="whatsapp-code">-prefix</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cambia el prefijo que usa el bot en el grupo actual</p></div>
+                    <div><p><span class="whatsapp-code">-topactivos</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa a los más activos del grupo</p></div>
+                    <div><p><span class="whatsapp-code">-topinactivos</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa a los más inactivos del grupo</p></div>
+                    <div><p><span class="whatsapp-code">-kick</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Expulsa a un usuario del grupo</p></div>
+                    <div><p><span class="whatsapp-code">-askwarns</span> <span class="whatsapp-code">-warnlist</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Consulta cuántas advertencias tiene un usuario</p></div>
+                    <div><p><span class="whatsapp-code">-warn</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Agrégale una advertencia a un usuario</p></div>
+                    <div><p><span class="whatsapp-code">-delwarn</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Quítale una advertencia a un usuario</p></div>
+                    <div><p><span class="whatsapp-code">-setwarnlimit</span> <span class="whatsapp-code">-warnlimit</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cambia el límite de advertencias en tu grupo</p></div>
+                    <div><p><span class="whatsapp-code">-grouplink</span> <span class="whatsapp-code">-glink</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Envía el link de invitación del grupo</p></div>
+                    <div><p><span class="whatsapp-code">-antilink</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz que el bot elimine links enviados por los miembros (warn)</p></div>
+                    <div><p><span class="whatsapp-code">-allowlink</span> <span class="whatsapp-code">-allink</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Permite links para que antilink no los borre</p></div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Grupos -->
+            <div id="cat-grupos" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Grupos</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-info</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Muestra la Info del grupo actual</p></div>
+                    <div><p><span class="whatsapp-code">-setdesc</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cambia la descripción del grupo</p><p class="text-xs text-[#FB3640]/80 italic">&gt; Admin only</p></div>
+                    <div><p><span class="whatsapp-code">-changepic</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cambia la imagen del grupo</p><p class="text-xs text-[#FB3640]/80 italic">&gt; Admin Only</p></div>
+                    <div><p><span class="whatsapp-code">-group close</span> <span class="whatsapp-code">open</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cerrar/Abrir el Grupo</p><p class="text-xs text-[#FB3640]/80 italic">&gt; Admin Only</p></div>
+                    <div><p><span class="whatsapp-code">-taghide</span> <span class="whatsapp-code">-hidetag</span> <span class="whatsapp-code">-tag</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Menciona a todos sin etiquetar</p><p class="text-xs text-[#FB3640]/80 italic">&gt; Admin only</p></div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Bienvenidas -->
+            <div id="cat-bienvenidas" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Bienvenidas</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-welcome</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa la bienvenida de tu grupo</p></div>
+                    <div><p><span class="whatsapp-code">-setwelcome</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Configura una bienvenida para tu grupo</p></div>
+                    <div><p><span class="whatsapp-code">-welcomes on</span> <span class="whatsapp-code">off</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Encender/apagar las bienvenidas en este grupo</p></div>
+                    <div><p><span class="whatsapp-code">-testwelcome</span> <span class="whatsapp-code">-testw</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Chequea la Bienvenida actual de tu grupo</p></div>
+                    <div><p><span class="whatsapp-code">-resetwelcome</span> <span class="whatsapp-code">-resetw</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Elimina tu Bienvenida personalizada de tu grupo</p></div>
+                    <div><p><span class="whatsapp-code">-welcomeimg</span> <span class="whatsapp-code">-wimage</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa o añade una Foto de bienvenida a tu grupo</p></div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Perfiles -->
+            <div id="cat-perfiles" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Perfiles</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-profile</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa o Crea un perfil</p></div>
+                    <div><p><span class="whatsapp-code">-delprofile</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Elimina tu perfil del bot</p></div>
+                    <div><p><span class="whatsapp-code">-setgenre</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Agrega tu Género a tu perfil</p></div>
+                    <div><p><span class="whatsapp-code">-setbirth</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Agrega una fecha de cumple a tu perfil</p></div>
+                    <div><p><span class="whatsapp-code">-profdesc</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Agrega una descripcion a tu perfil</p></div>
+                    <div><p><span class="whatsapp-code">-setname</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Agrega un nombre a tu perfil</p></div>
+                    <div><p><span class="whatsapp-code">-marry</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Casate con alguien</p></div>
+                    <div><p><span class="whatsapp-code">-divorce</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Divorciate de alguien</p></div>
+                    <div><p><span class="whatsapp-code">-profilepic</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Agrega una foto personalizada a tu perfil</p></div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Reacciones -->
+            <div id="cat-reacciones" class="space-y-3 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Reacciones</p>
+                
+                <div class="space-y-3 pl-3 border-l-2 border-[#FB3640]">
+                    <p class="font-semibold text-[#FB3640] text-xs">Acciones:</p>
+                    <div class="space-y-2 pl-2">
+                        <div><p><span class="whatsapp-code">-slap</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cachetea a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -slap @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-kill</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Mata a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -kill @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-punch</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Golpea a Alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -punch @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-yeet</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Lanza a alguien por los aires</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -yeet @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-baka</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Dile Estupido a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -baka @JustStar</p></div>
+                    </div>
+
+                    <p class="font-semibold text-[#FB3640] text-xs pt-1">Cariño:</p>
+                    <div class="space-y-2 pl-2">
+                        <div><p><span class="whatsapp-code">-sleep</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Duerme acurrucado con alguien o solo/a</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -sleep @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-kiss</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Besa a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -kiss @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-pat</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Acaricia a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -pat @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-hug</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Abraza a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -hug @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-bite</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Muerde a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -bite @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-cuddle</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Acurruca a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -cuddle @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-poke</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Molesta a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -poke @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-tickles</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Hazle cosquillitas a alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -tickles @JustStar</p></div>
+                        <div><p><span class="whatsapp-code">-highfive</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Choca esos 5 con alguien</p><p class="text-xs text-[#FB3640]/80 italic">&gt; ej: -highfive @JustStar</p></div>
+                    </div>
+
+                    <p class="font-semibold text-[#FB3640] text-xs pt-1">Expresiones:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-2">
+                        <div><p><span class="whatsapp-code">-cry</span></p><p class="text-xs text-[#94A3B8]">— Llora por sentirte triste</p></div>
+                        <div><p><span class="whatsapp-code">-mad</span></p><p class="text-xs text-[#94A3B8]">— Enojate por algo sucedido en el chat</p></div>
+                        <div><p><span class="whatsapp-code">-blush</span></p><p class="text-xs text-[#94A3B8]">— Sonrojate por algo</p></div>
+                        <div><p><span class="whatsapp-code">-smile</span></p><p class="text-xs text-[#94A3B8]">— Muestra una sonrisita</p></div>
+                        <div><p><span class="whatsapp-code">-happy</span></p><p class="text-xs text-[#94A3B8]">— Sientete muy feliz</p></div>
+                        <div><p><span class="whatsapp-code">-yawn</span></p><p class="text-xs text-[#94A3B8]">— Bosteza en el chat</p></div>
+                        <div><p><span class="whatsapp-code">-dance</span></p><p class="text-xs text-[#94A3B8]">— Baila Por alguna Razon</p></div>
+                        <div><p><span class="whatsapp-code">-sad</span></p><p class="text-xs text-[#94A3B8]">— Sientete triste por algo</p></div>
+                        <div><p><span class="whatsapp-code">-think</span></p><p class="text-xs text-[#94A3B8]">— Quedate pensando por una razon</p></div>
+                        <div><p><span class="whatsapp-code">-shy</span></p><p class="text-xs text-[#94A3B8]">— Sientete timido en el chat</p></div>
+                        <div><p><span class="whatsapp-code">-scared</span></p><p class="text-xs text-[#94A3B8]">— Sientete con miedo</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Economia -->
+            <div id="cat-economia" class="space-y-3 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Economía & Apuestas</p>
+                
+                <div class="space-y-3 pl-3 border-l-2 border-[#FB3640]">
+                    <div class="space-y-2">
+                        <div><p><span class="whatsapp-code">-balance</span> <span class="whatsapp-code">-bal</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Revisa tu dinero en el grupo</p></div>
+                        <div><p><span class="whatsapp-code">-deposit</span> <span class="whatsapp-code">-dep</span> <span class="whatsapp-code">-d</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Deposita tu dinero al banco</p></div>
+                        <div><p><span class="whatsapp-code">-withdraw</span> <span class="whatsapp-code">-with</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Saca tu dinero del banco</p></div>
+                        <div><p><span class="whatsapp-code">-work</span> <span class="whatsapp-code">-w</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Trabaja para conseguir dinero</p></div>
+                        <div><p><span class="whatsapp-code">-pay</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Transfierele dinero a alguien desde tu cuenta</p></div>
+                        <div><p><span class="whatsapp-code">-slut</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Vendete para conseguir algo de dinero.</p></div>
+                        <div><p><span class="whatsapp-code">-crime</span> <span class="whatsapp-code">-c</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Robale a la gente por dinero</p></div>
+                        <div><p><span class="whatsapp-code">-ecoinfo</span> <span class="whatsapp-code">-einfo</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Muestra Informacion de tu economia</p></div>
+                        <div><p><span class="whatsapp-code">-topbal</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Mira el top de los mas ricos en tu grupo o globalmente</p></div>
+                    </div>
+
+                    <p class="font-semibold text-[#FB3640] text-xs pt-1">Apuestas:</p>
+                    <div class="space-y-2 pl-2">
+                        <div><p><span class="whatsapp-code">-coinflip</span> <span class="whatsapp-code">-cf</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Apuesta Jugando a Cara o Cruz</p></div>
+                        <div><p><span class="whatsapp-code">-dices</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Apuesta Jugando a los dados con el Bot</p></div>
+                        <div><p><span class="whatsapp-code">-roulette</span> <span class="whatsapp-code">-rt</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Apuesta Jugando a la ruleta</p></div>
+                        <div><p><span class="whatsapp-code">-slots</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Apuesta en el Tragamonedas</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-[#1A2E26]">
+
+            <!-- Sub-Bots -->
+            <div id="cat-subbots" class="space-y-2 pt-1">
+                <p class="font-bold text-[#FB3640] text-base">Categoría: Sub-Bots</p>
+                <div class="pl-3 border-l-2 border-[#FB3640] space-y-2">
+                    <div><p><span class="whatsapp-code">-paircode</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz un Bot a partir de un token utilizando codigo de 8 digitos</p></div>
+                    <div><p><span class="whatsapp-code">-qrcode</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz un Bot a partir de un token utilizando codigo qr</p></div>
+                    <div><p><span class="whatsapp-code">-autojoin</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz que el Bot se Una automaticamente a los grupos enviados al privado por el dueño del bot</p></div>
+                    <div><p><span class="whatsapp-code">-join</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz que el Bot se una al link del grupo enviado por el dueño del bot</p></div>
+                    <div><p><span class="whatsapp-code">-setbotowner</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Registra un nuevo dueño del bot actual</p></div>
+                    <div><p><span class="whatsapp-code">-logout</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Haz que el Bot cierre Sesion en tu cuenta de Whatsapp</p></div>
+                    <div><p><span class="whatsapp-code">-setprefix</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Cambia el prefijo global del bot Actual (- Predeterminado)</p></div>
+                    <div><p><span class="whatsapp-code">-ongroup</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Activar al bot en el grupo actual</p></div>
+                    <div><p><span class="whatsapp-code">-offgroup</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Desactivar al bot en el grupo actual</p></div>
+                    <div><p><span class="whatsapp-code">-ban</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— El bot ignorara a los usuario baneado</p></div>
+                    <div><p><span class="whatsapp-code">-unban</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— El bot le quitara la sancion al user baneado</p></div>
+                    <div><p><span class="whatsapp-code">-botinfo</span> <span class="whatsapp-code">-binfo</span></p><p class="text-xs text-[#94A3B8] mt-0.5">— Muestra detalles del bot en tiempo real</p></div>
+                </div>
+            </div>
+
+            <div class="pt-4 text-center border-t border-[#1A2E26]">
+                <p class="font-bold tracking-widest text-[#FB3640]">《StarBots》</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="max-w-4xl mx-auto w-full text-center py-4 text-xs text-[#94A3B8] border-t border-[#1A2E26]">
+        &copy; 2026 StarBots - Guía de Comandos
+    </footer>
+
+    <script>
+        function scrollToCategory(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+</body>
+</html>
