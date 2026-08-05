@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarBots - Host e Infraestructura de WhatsApp</title>
+
+    <!-- FAVICON / MICRO FOTITO -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <!-- OPEN GRAPH FOR WHATSAPP -->
+    <meta property="og:site_name" content="StarBots">
+    <meta property="og:title" content="StarBots - Host de WhatsApp">
+    <meta property="og:description" content="Servicio de renta e infraestructura para bots de WhatsApp 24/7.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://starbotsla.vercel.app/">
+    <meta property="og:image" content="https://starbotsla.vercel.app/banner.png">
+    <meta property="og:image:secure_url" content="https://starbotsla.vercel.app/banner.png">
+    <meta property="og:image:type" content="image/png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #000F08;
+            color: #E2E8F0;
+            scroll-behavior: smooth;
+        }
+
+        .pill-btn {
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .pill-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .pill-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .nav-btn-active {
+            background-color: #FB3640 !important;
+            color: #000F08 !important;
+            box-shadow: 0 4px 16px rgba(251, 54, 64, 0.4) !important;
+            border-color: #FB3640 !important;
+            font-weight: 700 !important;
+        }
+
+        .night-panel {
+            background-color: #081410;
+            border: 1px solid #1A2E26;
+        }
+
+        .night-subcard {
+            background-color: #0E1F1A;
+            border: 1px solid #233B31;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000F08;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FB3640;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#FB3640] selection:text-[#000F08]">
+
+    <!-- Header Principal -->
+    <header class="w-full px-6 py-4 flex justify-between items-center bg-[#000F08]/90 backdrop-blur-md text-[#FB3640] border-b border-[#1A2E26] sticky top-0 z-50 shadow-xl">
+        <div class="flex items-center space-x-2 relative">
+            <svg class="w-8 h-8 text-[#FB3640]" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 8 8 12 2 12C8 12 12 16 12 22C12 16 16 12 22 12C16 12 12 8 12 2Z"/>
+            </svg>
+            <span class="text-xl font-black tracking-tight text-[#FB3640]">StarBots</span>
+
+            <!-- Botón Desplegable -->
+            <div class="relative ml-1">
+                <button onclick="toggleDropdownMenu()" id="dropdown-toggle-btn" title="Opciones" class="text-[#FB3640] hover:bg-[#1A2E26] transition-colors duration-200 p-1.5 rounded-full flex items-center justify-center focus:outline-none">
+                    <svg id="arrow-icon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Menú Desplegable Flotante -->
+                <div id="small-dropdown-menu" class="hidden absolute top-full left-0 mt-3 w-64 bg-[#081410] text-[#E2E8F0] rounded-2xl p-4 shadow-2xl border border-[#233B31] z-50">
+                    <div class="mb-3">
+                        <span class="text-[10px] font-bold tracking-wider text-[#FB3640] px-2 block mb-1">Información General</span>
+                        <div class="space-y-1">
+                            <button onclick="changeContent('about'); toggleDropdownMenu(); scrollToSection('panel-interactivo');" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold hover:bg-[#FB3640] hover:text-[#000F08] transition-all flex items-center justify-between group">
+                                <span>¿Quiénes somos?</span>
+                                <span class="text-[10px] opacity-60 group-hover:opacity-100">Ver</span>
+                            </button>
+
+                            <!-- Botón de Login debajo de Quiénes Somos -->
+                            <a href="login/" class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold bg-[#FB3640]/10 text-[#FB3640] border border-[#FB3640]/30 hover:bg-[#FB3640] hover:text-[#000F08] transition-all flex items-center justify-between mt-1.5">
+                                <span>Iniciar Sesión / Login</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <hr class="border-[#1A2E26] my-2">
+
+                    <div class="mb-1">
+                        <span class="text-[10px] font-bold tracking-wider text-[#94A3B8] px-2 block mb-1">Navegación Rápida</span>
+                        <div class="space-y-1">
+                            <button onclick="scrollToSection('tecnologia'); toggleDropdownMenu();" class="w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-[#0E1F1A] hover:text-[#FB3640] transition-all">
+                                Tecnología
+                            </button>
+                            <button onclick="scrollToSection('panel-interactivo'); toggleDropdownMenu();" class="w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-[#0E1F1A] hover:text-[#FB3640] transition-all">
+                                Centro de Información
+                            </button>
+                            <button onclick="scrollToSection('tarifas'); toggleDropdownMenu();" class="w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-[#0E1F1A] hover:text-[#FB3640] transition-all">
+                                Tarifas y Planes
+                            </button>
+                            <!-- Enlace limpio a /comandos -->
+                            <a href="/comandos" class="block w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold text-[#FB3640] hover:bg-[#0E1F1A] transition-all">
+                                Catálogo de Comandos →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicador de Hosting Activo -->
+        <div class="text-xs font-bold tracking-wider text-[#000F08] bg-[#FB3640] px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-md">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#000F08] animate-pulse"></span>
+            Hosting activo: <span id="header-bots-count">1</span>/1 Bot
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="max-w-5xl mx-auto px-6 pt-12 pb-10 text-center flex flex-col items-center">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E1F1A] border border-[#233B31] text-[#FB3640] text-xs font-bold mb-6">
+            <span class="w-2 h-2 rounded-full bg-[#FB3640] animate-pulse"></span>
+            Servidor Activo · Disponibilidad 99.9%
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white max-w-3xl leading-tight mb-6">
+            Infraestructura Robusta para Bots de WhatsApp
+        </h1>
+
+        <p class="text-xs sm:text-base text-[#94A3B8] max-w-2xl leading-relaxed mb-8">
+            Servicio de hospedaje 24/7 de alta estabilidad. Automatiza tus grupos, administra participantes e integra comandos avanzados sin interrupciones.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3">
+            <a href="#panel-interactivo" class="pill-btn px-6 py-3 bg-[#FB3640] text-[#000F08] font-extrabold text-xs sm:text-sm shadow-lg">
+                Explorar el Panel →
+            </a>
+            <a href="#tarifas" class="pill-btn px-6 py-3 bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-bold text-xs sm:text-sm hover:border-[#FB3640]">
+                Ver Tarifas y Planes
+            </a>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TECNOLOGÍA -->
+    <section id="tecnologia" class="max-w-5xl mx-auto px-6 py-10 w-full">
+        <div class="text-center mb-8">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#FB3640] block mb-1">Tecnología</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white">Lo que nos hace únicos</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="night-panel p-6 rounded-3xl space-y-2.5">
+                <div class="w-9 h-9 rounded-2xl bg-[#FB3640]/10 border border-[#FB3640]/30 flex items-center justify-center text-[#FB3640] text-lg font-bold">
+                    ⚡
+                </div>
+                <h3 class="text-base font-bold text-white">Disponibilidad Garantizada 24/7</h3>
+                <p class="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+                    Nuestra infraestructura Cloud asegura que tu bot se mantenga siempre en línea, procesando mensajes y comandos en milisegundos.
+                </p>
+            </div>
+
+            <div class="night-panel p-6 rounded-3xl space-y-2.5">
+                <div class="w-9 h-9 rounded-2xl bg-[#FB3640]/10 border border-[#FB3640]/30 flex items-center justify-center text-[#FB3640] text-lg font-bold">
+                    🔑
+                </div>
+                <h3 class="text-base font-bold text-white">Sistema de Réplicas por Token</h3>
+                <p class="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+                    Vincula y activa SubBots de forma completamente automatizada mediante un token único directamente enviado en WhatsApp.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PANEL INTERACTIVO -->
+    <section id="panel-interactivo" class="max-w-5xl mx-auto px-4 sm:px-6 py-10 w-full">
+        <div class="text-center mb-6">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#FB3640] block mb-1">Centro de Información</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white">Panel Interactivo</h2>
+            <p class="text-xs text-[#94A3B8] mt-1">Selecciona una categoría del índice para consultar la información correspondiente.</p>
+        </div>
+
+        <div class="night-panel p-5 sm:p-7 rounded-3xl shadow-2xl space-y-6">
+            
+            <!-- Botones Píldora de Índice -->
+            <div class="flex flex-wrap justify-center sm:justify-start gap-2 border-b border-[#1A2E26] pb-4">
+                <button id="btn-details" onclick="changeContent('details')" class="pill-btn nav-btn px-4 py-2 bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-semibold text-xs flex items-center gap-2">
+                    <span>Próximamente...</span>
+                    <span class="w-2 h-2 rounded-full bg-[#FB3640]"></span>
+                </button>
+
+                <button id="btn-info" onclick="changeContent('info')" class="pill-btn nav-btn px-4 py-2 bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-semibold text-xs flex items-center gap-2">
+                    <span>Información del bot</span>
+                    <span class="w-2 h-2 rounded-full bg-[#FB3640]"></span>
+                </button>
+
+                <button id="btn-social" onclick="changeContent('social')" class="pill-btn nav-btn px-4 py-2 bg-[#0E1F1A] border border-[#233B31] text-[#E2E8F0] font-semibold text-xs flex items-center gap-2">
+                    <span>Redes sociales</span>
+                    <span class="w-2 h-2 rounded-full bg-[#FB3640]"></span>
+                </button>
+
+                <!-- Enlace limpio a /comandos -->
+                <a href="/comandos" class="pill-btn px-4 py-2 bg-[#FB3640]/10 border border-[#FB3640]/40 text-[#FB3640] font-bold text-xs flex items-center gap-2 hover:bg-[#FB3640] hover:text-[#000F08] transition-colors">
+                    <span>Lista de Comandos</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+            <!-- Contenido Cambiante del Panel -->
+            <div id="dynamic-content" class="transition-all duration-300 min-h-[220px]">
+                <!-- Contenido dinámico inyectado con JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TARIFAS -->
+    <section id="tarifas" class="max-w-5xl mx-auto px-4 sm:px-6 py-10 w-full">
+        <div class="text-center mb-8">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#FB3640] block mb-1">Tarifas</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white">Planes y Precios</h2>
+            <p class="text-xs text-[#94A3B8] mt-1">Planes accesibles para adaptar tu bot a tus necesidades.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <!-- Plan SubBot -->
+            <div class="night-panel p-6 rounded-3xl border border-[#233B31] flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-bold text-white">SubBot Premium</h3>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] bg-[#0E1F1A] px-2.5 py-1 rounded-full border border-[#233B31]">Básico</span>
+                    </div>
+                    <div class="flex items-baseline gap-1 mb-5">
+                        <span class="text-3xl font-black text-[#FB3640]">$2.00</span>
+                        <span class="text-xs text-[#94A3B8] font-bold">USD / mes</span>
+                    </div>
+
+                    <ul class="space-y-2.5 text-xs text-[#E2E8F0] mb-6">
+                        <li class="flex items-center gap-2"><span class="text-[#FB3640] font-bold">✦</span> Canje instantáneo con Token en WhatsApp</li>
+                        <li class="flex items-center gap-2"><span class="text-[#FB3640] font-bold">✦</span> Catálogo de comandos completo</li>
+                        <li class="flex items-center gap-2"><span class="text-[#FB3640] font-bold">✦</span> Servidor activo 24 horas los 7 días</li>
+                    </ul>
+                </div>
+
+                <!-- Botón con Modal "Aún no disponible" -->
+                <button onclick="openModal()" class="pill-btn w-full py-3 bg-[#0E1F1A] border border-[#233B31] text-white font-bold text-xs text-center hover:border-[#FB3640]">
+                    Aún no disponible
+                </button>
+            </div>
+
+            <!-- Plan Bot Total -->
+            <div class="night-panel p-6 rounded-3xl border-2 border-[#FB3640] relative flex flex-col justify-between shadow-2xl">
+                <span class="absolute -top-3 right-6 text-[10px] font-extrabold uppercase tracking-wider bg-[#FB3640] text-[#000F08] px-3 py-0.5 rounded-full shadow">
+                    Más Popular
+                </span>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-bold text-[#FB3640]">Bot Total (Host Completo)</h3>
+                    </div>
+                    <div class="flex items-baseline gap-1 mb-5">
+                        <span class="text-3xl font-black text-white">$2.00</span>
+                        <span class="text-xs text-[#94A3B8] font-bold">USD / mes</span>
+                    </div>
+
+                    <ul class="space-y-2.5 text-xs text-[#E2E8F0] mb-6">
+                        <li class="flex items-center gap-2"><span class="text-[#FB3640] font-bold">✦</span> Generación y gestión de SubBots propios</li>
+                        <li class="flex items-center gap-2"><span class="text-[#FB3640] font-bold">✦</span> Armado a medida con los desarrolladores</li>
+                        <li class="flex items-center gap-2"><span class="text-[#FB3640] font-bold">✦</span> Control total de permisos y Bot Owner</li>
+                    </ul>
+                </div>
+
+                <!-- Botón con Modal "Aún no disponible" -->
+                <button onclick="openModal()" class="pill-btn w-full py-3 bg-[#FB3640] text-[#000F08] font-extrabold text-xs text-center shadow-md">
+                    Aún no disponible
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENTANA EMERGENTE (MODAL) PARA FUNCIONES NO DISPONIBLES -->
+    <div id="unavailable-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+        <div class="night-panel p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl border border-[#FB3640]/40 animate-fadeIn">
+            <div class="w-12 h-12 rounded-full bg-[#FB3640]/10 border border-[#FB3640]/30 flex items-center justify-center text-[#FB3640] text-xl mx-auto font-bold">
+              📃
+            </div>
+            <h3 class="text-lg font-bold text-white">Función no disponible</h3>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">
+                Esta función aún no está disponible por el momento. ¡Mantente atento a nuestro canal oficial de WhatsApp para las próximas aperturas de cupos!
+            </p>
+            <button onclick="closeModal()" class="pill-btn w-full py-2.5 bg-[#FB3640] text-[#000F08] font-bold text-xs shadow-md">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="w-full text-center py-6 text-xs text-[#94A3B8] font-medium tracking-wider bg-[#081410] border-t border-[#1A2E26] mt-8">
+        &copy; 2026 StarBots - Renta de bots e infraestructura de WhatsApp
+    </footer>
+
+    <script>
+        const contents = {
+            details: `
+                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[#FB3640] mb-1">Próximamente...</h3>
+                <p class="text-[#94A3B8] font-semibold text-xs tracking-wider mb-4">Nuevas funciones en desarrollo</p>
+                <div class="p-4 rounded-2xl night-subcard text-[#E2E8F0] space-y-2">
+                    <p class="font-bold text-[#FB3640] text-sm">Lo que viene para StarBots:</p>
+                    <p class="text-xs sm:text-sm leading-relaxed text-[#CBD5E1]">
+                        Estamos preparando nuevas características, mejoras en la velocidad de hospedaje y automatizaciones avanzadas para tu bot de WhatsApp. ¡Mantente atento a las actualizaciones!
+                    </p>
+                </div>
+            `,
+            about: `
+                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[#FB3640] mb-1">Quiénes somos</h3>
+                <p class="text-[#94A3B8] font-semibold text-xs tracking-wider mb-4">Sobre StarBots</p>
+                <div class="p-4 rounded-2xl night-subcard text-[#E2E8F0] space-y-3">
+                    <p class="text-xs sm:text-sm leading-relaxed text-[#CBD5E1]">
+                        Somos StarBots, un equipo de jóvenes programadores que buscamos crear bots de WhatsApp. Nuestro propósito es rentar bots para sus grupos. Por el momento solo prestamos nuestro bot disponible; a futuro pensamos tener una infraestructura robusta para nuestros clientes.
+                    </p>
+                    <div class="pt-2 border-t border-[#233B31] text-xs sm:text-sm">
+                        <p>A futuro rentaremos infraestructura robusta para tu bot de WhatsApp por solamente <strong class="text-[#FB3640]">$2.00 USD mensuales</strong>.</p>
+                    </div>
+                </div>
+            `,
+            info: `
+                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[#FB3640] mb-4">Información del bot</h3>
+                
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-semibold text-center">
+                        <div class="p-3 rounded-xl night-subcard text-[#94A3B8]">
+                            Capacidad: <span class="text-[#FB3640] block text-sm font-bold mt-0.5">1 Bot en servidor</span>
+                        </div>
+                        <div class="p-3 rounded-xl night-subcard text-[#94A3B8]">
+                            Renta mensual: <span class="text-[#FB3640] block text-sm font-bold mt-0.5">$2.00 USD / mes</span>
+                        </div>
+                        <div class="p-3 rounded-xl night-subcard text-[#94A3B8]">
+                            Uptime garantizado: <span class="text-[#FB3640] block text-sm font-bold mt-0.5">24/7 continuo</span>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl overflow-hidden border border-[#233B31] shadow-lg">
+                        <div class="grid grid-cols-2 bg-[#FB3640] text-[#000F08] text-center font-bold text-xs sm:text-sm py-2.5">
+                            <div class="border-r border-[#000F08]/20 flex items-center justify-center px-2">
+                                <span>Bot Total (Host)</span>
+                            </div>
+                            <div class="flex items-center justify-center px-2">
+                                <span>SubBot Premium</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-[#081410] text-xs divide-y divide-[#1A2E26]">
+                            <div class="grid grid-cols-2">
+                                <div class="p-3 border-r border-[#1A2E26] bg-[#0E1F1A]/60 text-[#E2E8F0]">
+                                    <strong class="text-[#FB3640] block mb-1">Genera SubBots</strong>
+                                    Puede crear y vincular múltiples SubBots mediante un token único que el cliente canjea en WhatsApp.
+                                </div>
+                                <div class="p-3 text-[#94A3B8]">
+                                    <strong class="text-[#FB3640]/80 block mb-1">Sin opción de réplica</strong>
+                                    Se le otorga un token de acceso, pero no tiene permisos para generar otros SubBots.
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2">
+                                <div class="p-3 border-r border-[#1A2E26] bg-[#0E1F1A]/60 text-[#E2E8F0]">
+                                    <strong class="text-[#FB3640] block mb-1">Armado a medida</strong>
+                                    El dueño arma cada Bot principal directamente en coordinación con los desarrolladores de StarBots.
+                                </div>
+                                <div class="p-3 text-[#94A3B8]">
+                                    <strong class="text-[#FB3640]/80 block mb-1">Canje con token</strong>
+                                    Se activa enviando un comando o token a través de WhatsApp a nuestro Bot oficial.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            social: `
+                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[#FB3640] mb-1">Redes sociales</h3>
+                <p class="text-[#94A3B8] font-semibold text-xs tracking-wider mb-4">Síguenos y conecta con nosotros</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="https://whatsapp.com/channel/0029Vb8Msmy6rsQs1N44PE1A" target="_blank" rel="noopener noreferrer" class="pill-btn p-4 bg-[#FB3640] text-[#000F08] text-center block shadow-lg hover:scale-105 transition-transform">
+                        <p class="font-bold text-sm mb-0.5">WhatsApp oficial</p>
+                        <p class="text-[11px] text-[#000F08]/80 font-medium">¡Únete a nuestro canal!</p>
+                    </a>
+                    <a href="https://www.tiktok.com/@starbots.la?_r=1&_t=ZS-98OLA0MPuVO" target="_blank" rel="noopener noreferrer" class="pill-btn p-4 bg-[#0E1F1A] border border-[#FB3640] text-[#FB3640] text-center shadow-lg block hover:scale-105 transition-transform">
+                        <p class="font-bold text-sm mb-0.5">TikTok oficial</p>
+                        <p class="text-[11px] text-[#E2E8F0]/80">@starbots.la</p>
+                    </a>
+                </div>
+            `
+        };
+
+        function changeContent(key) {
+            const container = document.getElementById('dynamic-content');
+            if (!container || !contents[key]) return;
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('nav-btn-active');
+            });
+            const activeBtn = document.getElementById(`btn-${key}`);
+            if (activeBtn) {
+                activeBtn.classList.add('nav-btn-active');
+            }
+
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(4px)';
+            
+            setTimeout(() => {
+                container.innerHTML = contents[key];
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 120);
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function openModal() {
+            document.getElementById('unavailable-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('unavailable-modal').classList.add('hidden');
+        }
+
+        function toggleDropdownMenu() {
+            const menu = document.getElementById('small-dropdown-menu');
+            const arrow = document.getElementById('arrow-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                menu.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        document.addEventListener('click', (event) => {
+            const menu = document.getElementById('small-dropdown-menu');
+            const btn = document.getElementById('dropdown-toggle-btn');
+            if (menu && !menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.classList.add('hidden');
+                document.getElementById('arrow-icon').style.transform = 'rotate(0deg)';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            changeContent('details');
+        });
+    </script>
+</body>
+</html
